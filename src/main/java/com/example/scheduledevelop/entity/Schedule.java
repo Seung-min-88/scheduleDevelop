@@ -1,13 +1,11 @@
 package com.example.scheduledevelop.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
@@ -21,8 +19,10 @@ public class Schedule {
     private String title;
     private String todo;
 
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
+    @Column(name = "updatedAt")
+    private LocalDateTime updatedAt;
 
     public Schedule(Long userId, String title, String todo) {
         this.userId = userId;
@@ -30,10 +30,21 @@ public class Schedule {
         this.todo = todo;
     }
 
-    public void update(Long userId, String title, String todo, LocalDateTime updateAt){
+    public void update(Long userId, String title, String todo, LocalDateTime updatedAt){
         this.userId = userId;
         this.title = title;
         this.todo = todo;
-        this.updateAt = updateAt;
+        this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    public void prePersist(){
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+        this.updatedAt = LocalDateTime.now();
     }
 }
