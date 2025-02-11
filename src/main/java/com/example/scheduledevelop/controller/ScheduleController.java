@@ -21,9 +21,9 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleService.save(dto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/schedules/{userId}")
-    public ResponseEntity<List<ScheduleResponseDto>> findAll(@PathVariable Long userId){
-        return new ResponseEntity<>(scheduleService.findAll(userId), HttpStatus.OK);
+    @GetMapping("/schedules")
+    public ResponseEntity<List<ScheduleResponseDto>> findAll(){
+        return new ResponseEntity<>(scheduleService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/schedules/{id}")

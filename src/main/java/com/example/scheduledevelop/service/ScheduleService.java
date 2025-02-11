@@ -26,8 +26,8 @@ public class ScheduleService {
     }
 
     @Transactional(readOnly = true)
-    public List<ScheduleResponseDto> findAll(Long userId){
-        List<Schedule> schedules = scheduleRepository.findByUserId(userId);
+    public List<ScheduleResponseDto> findAll(){
+        List<Schedule> schedules = scheduleRepository.findAll();
 
         List<ScheduleResponseDto> dtos = new ArrayList<>();
         for(Schedule schedule : schedules){

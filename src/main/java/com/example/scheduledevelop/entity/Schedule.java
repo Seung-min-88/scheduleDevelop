@@ -15,6 +15,10 @@ public class Schedule {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
+
     private Long userId;
     private String title;
     private String todo;
