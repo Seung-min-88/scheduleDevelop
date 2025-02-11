@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Schedule {
 
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long adId;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Long userId;
     private String title;
@@ -23,4 +23,17 @@ public class Schedule {
 
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
+
+    public Schedule(Long userId, String title, String todo) {
+        this.userId = userId;
+        this.title = title;
+        this.todo = todo;
+    }
+
+    public void update(Long userId, String title, String todo, LocalDateTime updateAt){
+        this.userId = userId;
+        this.title = title;
+        this.todo = todo;
+        this.updateAt = updateAt;
+    }
 }
