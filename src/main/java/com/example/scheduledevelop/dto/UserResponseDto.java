@@ -10,15 +10,17 @@ public class UserResponseDto {
     private Long id;
     private String email;
     private String name;
-    private String password;
 
-
-    public UserResponseDto(Long id, String email, String name, String password) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.password = password;
+    public UserResponseDto(Long id){
+        this.id =id;
     }
+
+//    public UserResponseDto(Long id, String email, String name) {
+//        this.id = id;
+//        this.email = email;
+//        this.name = name;
+//
+//    }
 
     // 유저 정보 조회시
     public UserResponseDto(Long id, String email, String name){
@@ -27,8 +29,7 @@ public class UserResponseDto {
         this.name = name;
     }
 
-    public UserResponseDto(String email, String password) {
+    public UserResponseDto(String email) {
         this.email = email;
-        this.password = password;
     }
 }

@@ -8,13 +8,19 @@ import java.time.LocalDateTime;
 public class ScheduleResponseDto {
 
     private final Long id;
-    private final Long userId;
+    private UserResponseDto user;
     private final String title;
     private final String todo;
 
-    public ScheduleResponseDto(Long id, Long userId, String title, String todo) {
+    public ScheduleResponseDto(Long id, UserResponseDto user, String title, String todo) {
         this.id = id;
-        this.userId = userId;
+        this.user = user;
+        this.title = title;
+        this.todo = todo;
+    }
+
+    public ScheduleResponseDto(Long id, String title, String todo){
+        this.id = id;
         this.title = title;
         this.todo = todo;
     }

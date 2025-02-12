@@ -24,7 +24,7 @@ public class UserService {
         User user = new User(dto.getEmail(), dto.getName(), dto.getPassword());
         User saveUser = userRepository.save(user);
 
-        return new UserResponseDto(saveUser.getId(), saveUser.getEmail(), saveUser.getName(), saveUser.getPassword());
+        return new UserResponseDto(saveUser.getId(), saveUser.getEmail(), saveUser.getName());
     }
 
     @Transactional
@@ -35,7 +35,7 @@ public class UserService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        return new LoginResponseDto(user.getEmail(), user.getPassword());
+        return new LoginResponseDto(user.getId(),user.getName(), user.getEmail(), user.getPassword());
     }
 
     @Transactional(readOnly = true)
@@ -52,12 +52,8 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserResponseDto findUserById(Long id){
         User user = userRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("asdfasd")
+                () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다")
         );
-
-//        User user = userRepository.findById(id).orElseThrow(
-//                () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다")
-//        );
         return new UserResponseDto(user.getId(), user.getEmail(), user.getName());
     }
 
@@ -68,7 +64,7 @@ public class UserService {
         );
         user.update(dto.getId(), dto.getEmail(), dto.getName(), dto.getPassword());
 
-        return new UserResponseDto(user.getId(), user.getEmail(), user.getName(), user.getPassword());
+        return new UserResponseDto(user.getId(), user.getEmail(), user.getName());
     }
 
     @Transactional
