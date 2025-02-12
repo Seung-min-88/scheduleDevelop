@@ -11,23 +11,24 @@ public class UserResponseDto {
     private String email;
     private String name;
     private String password;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    public UserResponseDto(Long id, String email, String name, String password, LocalDateTime createdAt, LocalDateTime updatedAt) {
+
+    public UserResponseDto(Long id, String email, String name, String password) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.password = password;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     // 유저 정보 조회시
-    public UserResponseDto(Long id, String email, String name, LocalDateTime createdAt){
+    public UserResponseDto(Long id, String email, String name){
         this.id = id;
         this.email = email;
         this.name = name;
-        this.createdAt = createdAt;
+    }
+
+    public UserResponseDto(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.scheduledevelop.service;
 
+import com.example.scheduledevelop.dto.LoginResponseDto;
+import com.example.scheduledevelop.dto.SignUpRequestDto;
 import com.example.scheduledevelop.dto.UserRequestDto;
 import com.example.scheduledevelop.dto.UserResponseDto;
 import com.example.scheduledevelop.entity.User;
@@ -17,12 +19,23 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-
-    public UserResponseDto saveUser(UserRequestDto dto){
-        User user = new User(dto.getId(), dto.getEmail(), dto.getName(),  dto.getPassword());
+    @Transactional
+    public UserResponseDto signUp(SignUpRequestDto dto){
+        User user = new User(dto.getEmail(), dto.getName(), dto.getPassword());
         User saveUser = userRepository.save(user);
 
-        return new UserResponseDto(saveUser.getId(), saveUser.getEmail(), saveUser.getName(), saveUser.getPassword(), saveUser.getCreatedAt(), saveUser.getUpdatedAt());
+        return new UserResponseDto(saveUser.getId(), saveUser.getEmail(), saveUser.getName(), saveUser.getPassword());
+    }
+
+    @Transactional
+    public LoginResponseDto login(String email, String password){
+        User user = userRepository.findByEmail(email).orElseThrow(()-> new IllegalArgumentException("해당 이메일의 유저가 존재하지 않습니다"));
+
+        if(!user.getPassword().equals(password)){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        return new LoginResponseDto(user.getEmail(), user.getPassword());
     }
 
     @Transactional(readOnly = true)
@@ -31,7 +44,7 @@ public class UserService {
 
         List<UserResponseDto> dtos = new ArrayList<>();
         for (User user : users) {
-            dtos.add(new UserResponseDto(user.getId(), user.getEmail(), user.getName(),user.getCreatedAt()));
+            dtos.add(new UserResponseDto(user.getId(), user.getEmail(), user.getName()));
         }
         return dtos;
     }
@@ -39,9 +52,13 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserResponseDto findUserById(Long id){
         User user = userRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다")
+                () -> new IllegalArgumentException("asdfasd")
         );
-        return new UserResponseDto(user.getId(), user.getEmail(), user.getName(), user.getCreatedAt());
+
+//        User user = userRepository.findById(id).orElseThrow(
+//                () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다")
+//        );
+        return new UserResponseDto(user.getId(), user.getEmail(), user.getName());
     }
 
     @Transactional
@@ -49,9 +66,9 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다")
         );
-        user.update(dto.getId(), dto.getEmail(), dto.getName(), dto.getPassword(), dto.getUpdatedAt());
+        user.update(dto.getId(), dto.getEmail(), dto.getName(), dto.getPassword());
 
-        return new UserResponseDto(user.getId(), user.getEmail(), user.getName(), user.getPassword(), user.getCreatedAt(), user.getUpdatedAt());
+        return new UserResponseDto(user.getId(), user.getEmail(), user.getName(), user.getPassword());
     }
 
     @Transactional

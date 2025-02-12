@@ -1,5 +1,6 @@
 package com.example.scheduledevelop.controller;
 
+import com.example.scheduledevelop.dto.SignUpRequestDto;
 import com.example.scheduledevelop.dto.UserRequestDto;
 import com.example.scheduledevelop.dto.UserResponseDto;
 import com.example.scheduledevelop.service.UserService;
@@ -16,9 +17,10 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/users")
-    public ResponseEntity<UserResponseDto> saveUser(@RequestBody UserRequestDto dto){
-        return new ResponseEntity<>(userService.saveUser(dto), HttpStatus.CREATED);
+    @PostMapping("/users/signup")
+    public ResponseEntity<UserResponseDto> signup(@RequestBody SignUpRequestDto signUpRequestDto){
+        UserResponseDto userResponseDto = userService.signUp(signUpRequestDto);
+        return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/users")
@@ -41,5 +43,6 @@ public class UserController {
         userService.deleteUserData(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
 }

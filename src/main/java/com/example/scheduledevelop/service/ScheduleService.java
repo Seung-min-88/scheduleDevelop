@@ -22,7 +22,7 @@ public class ScheduleService {
         Schedule schedule = new Schedule(dto.getUserId(),dto.getTitle(), dto.getTodo());
         Schedule saveSchedule = scheduleRepository.save(schedule);
 
-        return new ScheduleResponseDto(saveSchedule.getId(), saveSchedule.getUserId(),saveSchedule.getTitle(), saveSchedule.getTodo(), saveSchedule.getCreatedAt(), saveSchedule.getUpdatedAt());
+        return new ScheduleResponseDto(saveSchedule.getId(), saveSchedule.getUserId(),saveSchedule.getTitle(), saveSchedule.getTodo());
     }
 
     @Transactional(readOnly = true)
@@ -31,7 +31,7 @@ public class ScheduleService {
 
         List<ScheduleResponseDto> dtos = new ArrayList<>();
         for(Schedule schedule : schedules){
-            ScheduleResponseDto dto = new ScheduleResponseDto(schedule.getId(), schedule.getUserId(), schedule.getTitle(), schedule.getTodo(), schedule.getCreatedAt(), schedule.getUpdatedAt());
+            ScheduleResponseDto dto = new ScheduleResponseDto(schedule.getId(), schedule.getUserId(), schedule.getTitle(), schedule.getTodo());
             dtos.add(dto);
         }
         // 빠른 for문 생성 schedules.for + tab키
@@ -43,7 +43,7 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("작성된 일정이 없습니다!")
         );
-        return new ScheduleResponseDto(schedule.getId(), schedule.getUserId(), schedule.getTitle(), schedule.getTodo(), schedule.getUpdatedAt());
+        return new ScheduleResponseDto(schedule.getId(), schedule.getUserId(), schedule.getTitle(), schedule.getTodo());
     }
 
     @Transactional
@@ -51,8 +51,8 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("작성된 일정이 없습니다!")
         );
-        schedule.update(dto.getUserId(), dto.getTitle(),dto.getTodo(), dto.getUpdatedAt());
-        return new ScheduleResponseDto(schedule.getId(), schedule.getUserId(), schedule.getTitle(), schedule.getTodo(), schedule.getUpdatedAt());
+        schedule.update(dto.getUserId(), dto.getTitle(),dto.getTodo());
+        return new ScheduleResponseDto(schedule.getId(), schedule.getUserId(), schedule.getTitle(), schedule.getTodo());
     }
 
     @Transactional

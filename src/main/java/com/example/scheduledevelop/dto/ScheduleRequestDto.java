@@ -10,6 +10,5 @@ public class ScheduleRequestDto {
     private Long userId;
     private String title;
     private String todo;
-    private LocalDateTime updatedAt;
 
 }
