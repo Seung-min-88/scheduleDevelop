@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ public class LoginController {
             session = request.getSession(true);  // 없을경우 있게 만들어줌
         }
 
-//        User loginUser = userService.login(dto);
+
         if (loginResponseDto != null) {
             log.info("로그인 성공 유저(userId, name, email) = {}, {}, {}",
                     loginResponseDto.getUserId(),
@@ -42,17 +43,16 @@ public class LoginController {
             session.setAttribute("userId", loginResponseDto.getUserId());
             session.setMaxInactiveInterval(1800); //30분
         }
-
-//        HttpSession session = httpServletRequest.getSession(false);
-//
-//        if(loginResponseDto != null){
-//            log.info("로그인 성공유지(email) = {}",
-//                    loginResponseDto.getEmail());
-//            session.setAttribute("userId", loginResponseDto.getEmail());
-//            session.setMaxInactiveInterval(1800);
-//        }
-
         return new ResponseEntity<>(loginResponseDto, HttpStatus.OK);
+    }
+
+    @PutMapping("/logout")
+    private ResponseEntity<Void> logout(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if (session != null){
+            session.invalidate();
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
