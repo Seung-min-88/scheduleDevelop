@@ -29,7 +29,11 @@ public class Schedule extends BaseEntity{
     }
 
     public void update(String title, String todo){
-        this.title = title;
-        this.todo = todo;
+        if(title != null && !title.isEmpty()){
+            this.title = title;
+        }
+        if(todo != null && !todo.isEmpty()){
+            this.todo = todo;
+        }
     }
 }

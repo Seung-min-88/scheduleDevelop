@@ -37,8 +37,9 @@ public class ScheduleService {
 
         List<ScheduleResponseDto> dtos = new ArrayList<>();
         for(Schedule schedule : schedules){
-            ScheduleResponseDto dto = new ScheduleResponseDto(schedule.getId(), schedule.getTitle(), schedule.getTodo());
             UserResponseDto userDto = new UserResponseDto(schedule.getUser().getId(), schedule.getUser().getName());
+            ScheduleResponseDto dto = new ScheduleResponseDto(schedule.getId(),userDto.getName(), schedule.getTitle(), schedule.getTodo());
+
             dtos.add(dto);
         }
         // 빠른 for문 생성 schedules.for + tab키
