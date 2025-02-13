@@ -10,5 +10,8 @@
 ## API
 ![스크린샷 2025-02-13 시간: 12 07 06](https://github.com/user-attachments/assets/20e32715-5c3e-4d41-963d-41ead08b841e)
 
+## SQL
+![스크린샷 2025-02-13 시간: 13 46 52](https://github.com/user-attachments/assets/f921aa30-2693-4535-818a-f4d0a2528ad3)
+
 ## 트러블 슈팅 및 과제 진행 리뷰
 https://cork-7.tistory.com/52
