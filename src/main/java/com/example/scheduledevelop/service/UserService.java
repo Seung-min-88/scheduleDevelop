@@ -1,9 +1,6 @@
 package com.example.scheduledevelop.service;
 
-import com.example.scheduledevelop.dto.LoginResponseDto;
-import com.example.scheduledevelop.dto.SignUpRequestDto;
-import com.example.scheduledevelop.dto.UserRequestDto;
-import com.example.scheduledevelop.dto.UserResponseDto;
+import com.example.scheduledevelop.dto.*;
 import com.example.scheduledevelop.entity.User;
 import com.example.scheduledevelop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +25,10 @@ public class UserService {
     }
 
     @Transactional
-    public LoginResponseDto login(String email, String password){
-        User user = userRepository.findByEmail(email).orElseThrow(()-> new IllegalArgumentException("해당 이메일의 유저가 존재하지 않습니다"));
+    public LoginResponseDto login(LoginRequestDto dto){
+        User user = userRepository.findByEmail(dto.getEmail()).orElseThrow(()-> new IllegalArgumentException("해당 이메일의 유저가 존재하지 않습니다"));
 
-        if(!user.getPassword().equals(password)){
+        if(!user.getPassword().equals(dto.getPassword())){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
@@ -50,29 +47,29 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserResponseDto findUserById(Long id){
-        User user = userRepository.findById(id).orElseThrow(
+    public UserResponseDto findUserById(Long userId){
+        User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다")
         );
         return new UserResponseDto(user.getId(), user.getEmail(), user.getName());
     }
 
     @Transactional
-    public UserResponseDto updateData(Long id, UserRequestDto dto){
-        User user = userRepository.findById(id).orElseThrow(
+    public UserResponseDto updateData(Long userId, UserRequestDto dto){
+        User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다")
         );
-        user.update(dto.getId(), dto.getEmail(), dto.getName(), dto.getPassword());
+        user.update(dto.getUserId(), dto.getEmail(), dto.getName(), dto.getPassword());
 
         return new UserResponseDto(user.getId(), user.getEmail(), user.getName());
     }
 
     @Transactional
-    public void deleteUserData(Long id){
-        if(!userRepository.existsById(id)){
+    public void deleteUserData(Long userId){
+        if(!userRepository.existsById(userId)){
             throw  new IllegalArgumentException("해당 유저가 존재하지 않습니다");
         }
-        userRepository.deleteById(id);
+        userRepository.deleteById(userId);
     }
 
 }

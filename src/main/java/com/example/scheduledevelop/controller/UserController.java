@@ -28,19 +28,19 @@ public class UserController {
         return new ResponseEntity<>(userService.findAllUser(), HttpStatus.OK);
     }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<UserResponseDto> findUser(@PathVariable Long id){
-        return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<UserResponseDto> findUser(@PathVariable Long userId){
+        return new ResponseEntity<>(userService.findUserById(userId), HttpStatus.OK);
     }
 
-    @PutMapping("/users/{id}")
-    public ResponseEntity<UserResponseDto> updateUserData(@PathVariable Long id, @RequestBody UserRequestDto dto){
-        return new ResponseEntity<>(userService.updateData(id, dto), HttpStatus.OK);
+    @PutMapping("/users/{userId}")
+    public ResponseEntity<UserResponseDto> updateUserData(@PathVariable Long userId, @RequestBody UserRequestDto dto){
+        return new ResponseEntity<>(userService.updateData(userId, dto), HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<Void> deleteUserData(@PathVariable Long id){
-        userService.deleteUserData(id);
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<Void> deleteUserData(@PathVariable Long userId){
+        userService.deleteUserData(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

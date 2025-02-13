@@ -4,13 +4,13 @@ import lombok.Getter;
 
 @Getter
 public class LoginResponseDto {
-    private Long id;
+    private Long userId;
     private String name;
     private String email;
     private String password;
 
-    public LoginResponseDto(Long id, String name, String email, String password){
-        this.id = id;
+    public LoginResponseDto(Long userId, String name, String email, String password){
+        this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = password;

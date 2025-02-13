@@ -1,8 +1,10 @@
 package com.example.scheduledevelop.controller;
 
+import com.example.scheduledevelop.dto.LoginRequestDto;
 import com.example.scheduledevelop.dto.LoginResponseDto;
 import com.example.scheduledevelop.dto.SignUpRequestDto;
 import com.example.scheduledevelop.dto.UserResponseDto;
+import com.example.scheduledevelop.entity.User;
 import com.example.scheduledevelop.service.UserService;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,21 +24,22 @@ public class LoginController {
 
     private final UserService userService;
 
-    @PostMapping("/users/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody SignUpRequestDto loginDto, HttpServletRequest request){
-        LoginResponseDto loginResponseDto= userService.login(loginDto.getEmail(),loginDto.getPassword());
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto dto, HttpServletRequest request){
+        LoginResponseDto loginResponseDto = userService.login(dto);
 
         HttpSession session = request.getSession(false); // 없을시 null 반환(실패한 적이 있다면 세션이 있을수도)
         if (session == null) {
             session = request.getSession(true);  // 없을경우 있게 만들어줌
         }
 
+//        User loginUser = userService.login(dto);
         if (loginResponseDto != null) {
-            log.info("로그인 성공 유저(id, name, email) = {}, {}, {}",
-                    loginResponseDto.getId(),
+            log.info("로그인 성공 유저(userId, name, email) = {}, {}, {}",
+                    loginResponseDto.getUserId(),
                     loginResponseDto.getName(),
                     loginResponseDto.getEmail());
-            session.setAttribute("userId", loginResponseDto.getId());
+            session.setAttribute("userId", loginResponseDto.getUserId());
             session.setMaxInactiveInterval(1800); //30분
         }
 

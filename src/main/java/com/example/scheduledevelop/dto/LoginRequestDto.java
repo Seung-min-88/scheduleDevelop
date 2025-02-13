@@ -1,15 +1,11 @@
 package com.example.scheduledevelop.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 @Getter
-public class UserRequestDto {
-
-    private Long userId;
-    private String name;
+@AllArgsConstructor
+public class LoginRequestDto {
     private String email;
     private String password;
-
 }
