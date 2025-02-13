@@ -30,8 +30,14 @@ public class User extends BaseEntity{
 
     public void update(Long id, String email, String name,  String password){
         this.id = id;
-        this.email = email;
-        this.name = name;
-        this.password = password;
+        if (email != null && !email.isEmpty()) {
+            this.email = email;  // 이메일이 비어있지 않으면 업데이트
+        }
+        if (name != null && !name.isEmpty()) {
+            this.name = name;  // 이름이 비어있지 않으면 업데이트
+        }
+        if (password != null && !password.isEmpty()) {
+            this.password = password;  // 비밀번호가 비어있지 않으면 업데이트
+        }
     }
 }

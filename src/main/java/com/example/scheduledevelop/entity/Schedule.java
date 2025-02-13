@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 @Entity
 @Getter
 @NoArgsConstructor
@@ -20,8 +17,6 @@ public class Schedule extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-//    private Long userId;
 
     private String title;
     private String todo;

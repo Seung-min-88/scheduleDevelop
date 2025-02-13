@@ -1,5 +1,6 @@
 package com.example.scheduledevelop.controller;
 
+import com.example.scheduledevelop.dto.DeleteUserRequestDto;
 import com.example.scheduledevelop.dto.SignUpRequestDto;
 import com.example.scheduledevelop.dto.UserRequestDto;
 import com.example.scheduledevelop.dto.UserResponseDto;
@@ -39,9 +40,13 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{userId}")
-    public ResponseEntity<Void> deleteUserData(@PathVariable Long userId){
-        userService.deleteUserData(userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Void> deleteUserData(@PathVariable Long userId, @RequestBody DeleteUserRequestDto dto){
+        try{
+            userService.deleteUserData(userId, dto);
+            return  new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 

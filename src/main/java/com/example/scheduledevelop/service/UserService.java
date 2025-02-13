@@ -67,10 +67,15 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUserData(Long userId){
-        if(!userRepository.existsById(userId)){
-            throw  new IllegalArgumentException("해당 유저가 존재하지 않습니다");
+    public void deleteUserData(Long userId, DeleteUserRequestDto dto){
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다")
+        );
+
+        if (!user.getEmail().equals(dto.getEmail()) || !user.getPassword().equals(dto.getPassword())){
+            throw new IllegalArgumentException("이메일 또는 비밀번호가 잘못입력되었습니다");
         }
+
         userRepository.deleteById(userId);
     }
 
