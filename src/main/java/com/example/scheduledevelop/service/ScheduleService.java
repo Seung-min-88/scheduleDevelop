@@ -28,7 +28,7 @@ public class ScheduleService {
         Schedule schedule = new Schedule(user, dto.getTitle(), dto.getTodo());
         Schedule saveSchedule = scheduleRepository.save(schedule);
 
-        return new ScheduleResponseDto(saveSchedule.getId(), new UserResponseDto(user.getId()), saveSchedule.getTitle(), saveSchedule.getTodo());
+        return new ScheduleResponseDto(saveSchedule.getId(), user.getName(), saveSchedule.getTitle(), saveSchedule.getTodo());
     }
 
     @Transactional(readOnly = true)
@@ -38,7 +38,7 @@ public class ScheduleService {
         List<ScheduleResponseDto> dtos = new ArrayList<>();
         for(Schedule schedule : schedules){
             ScheduleResponseDto dto = new ScheduleResponseDto(schedule.getId(), schedule.getTitle(), schedule.getTodo());
-            UserResponseDto userDto = new UserResponseDto(schedule.getUser().getId());
+            UserResponseDto userDto = new UserResponseDto(schedule.getUser().getId(), schedule.getUser().getName());
             dtos.add(dto);
         }
         // 빠른 for문 생성 schedules.for + tab키
@@ -50,7 +50,7 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("작성된 일정이 없습니다!")
         );
-        return new ScheduleResponseDto(schedule.getId(), new UserResponseDto(schedule.getUser().getId()), schedule.getTitle(), schedule.getTodo());
+        return new ScheduleResponseDto(schedule.getId(), schedule.getUser().getName(), schedule.getTitle(), schedule.getTodo());
     }
 
     @Transactional
@@ -59,7 +59,7 @@ public class ScheduleService {
                 () -> new IllegalArgumentException("작성된 일정이 없습니다!")
         );
         schedule.update(dto.getTitle(),dto.getTodo());
-        return new ScheduleResponseDto(schedule.getId(), new UserResponseDto(schedule.getUser().getId()), schedule.getTitle(), schedule.getTodo());
+        return new ScheduleResponseDto(schedule.getId(), schedule.getUser().getName(), schedule.getTitle(), schedule.getTodo());
     }
 
     @Transactional

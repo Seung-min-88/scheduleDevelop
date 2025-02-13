@@ -4,8 +4,10 @@ import com.example.scheduledevelop.dto.*;
 import com.example.scheduledevelop.entity.User;
 import com.example.scheduledevelop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +28,10 @@ public class UserService {
 
     @Transactional
     public LoginResponseDto login(LoginRequestDto dto){
-        User user = userRepository.findByEmail(dto.getEmail()).orElseThrow(()-> new IllegalArgumentException("해당 이메일의 유저가 존재하지 않습니다"));
+        User user = userRepository.findByEmail(dto.getEmail()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"해당 이메일의 유저가 존재하지 않습니다"));
 
         if(!user.getPassword().equals(dto.getPassword())){
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
         }
 
         return new LoginResponseDto(user.getId(),user.getName(), user.getEmail(), user.getPassword());
